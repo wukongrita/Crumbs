@@ -1,0 +1,24 @@
+<div class="row toolbar">
+  <div class="col-xs-12">
+    {{#bs-button type="info" action=(action "actToolbarList")}}<span class="fa fa-list"></span>{{/bs-button}}
+    {{#bs-button type="warning"  action=(action "actToolbarNew")}}<span class="fa fa-plus"></span> {{t "button.new"}}{{/bs-button}}
+  </div>
+{{!--
+  <div class="col-xs-4">
+    {{assets/b-language-chooser actLanguageChange="actLanguageChange"}}
+  </div>
+ --}}
+</div>
+
+{{#if (eq mode "list")}}
+  {{assets/b-crud-table model=modelList columns=crudTable.columns
+    actRefresh="actRefresh" actEditSelected="actEditSelected"}}
+
+{{else}}
+  {{#assets/b-crud-form model=modelForm submit="submit"}}
+    {{bs-form-element label=(t "field.id.name") property="id" value=model.id disabled=isEditing autofocus="autofocus"}}
+
+    {{bs-form-element controlType="textarea" label=(t "field.description.name") property="description" value=model.description rows="3"}}
+  {{/assets/b-crud-form}}
+
+{{/if}}

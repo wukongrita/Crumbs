@@ -1,0 +1,116 @@
+<div class="row bottom-space">
+  <div class="col-xs-12">
+    <div class="pull-left">
+      {{#bs-dropdown}}
+        {{#bs-dropdown-button class="btn-sm"}}<span class="fa fa-gear"></span> <span class="caret"></span>{{/bs-dropdown-button}}
+        {{#bs-dropdown-menu}}
+          <li>
+            <a href="#" {{action "actRefresh"}}><span class="fa fa-refresh"></span> {{t "button.refresh"}}</a>
+          </li>
+          <li class="divider"></li>
+          <li class="{{if isDelete null "disabled"}}">
+            <a href="#" {{action "deleteSelected" model}}>
+              <span class="fa fa-trash"></span> {{t "button.delete"}}
+            </a>
+          </li>
+{{!--
+          <li class="divider"></li>
+          <li class="disabled">{{#link-to "m.dashboard"}}<span class="fa fa-coffee"></span> <span class="fa fa-file-pdf-o"></span> {{t "button.export.pdf"}}{{/link-to}}</li>
+          <li class="disabled">{{#link-to "m.dashboard"}}<span class="fa fa-coffee"></span> <span class="fa fa-file-excel-o"></span> {{t "button.export.xls"}}{{/link-to}}</li>
+ --}}
+        {{/bs-dropdown-menu}}
+      {{/bs-dropdown}}
+    </div>
+
+    <div class="pull-right">
+      {{#bs-form formLayout="inline" novalidate="" class="search"}}
+        {{#bs-dropdown closeOnMenuClick=false open=open}}
+          {{#bs-dropdown-button class="btn-sm"}}
+            <span class="fa fa-search"></span> <span class="caret"></span>
+          {{/bs-dropdown-button}}
+
+          {{#bs-dropdown-menu align="right"}}
+            <li class="dropdown-header">{{t "filter.title"}}</li>
+
+            {{#each filter.items as |item indexFilter|}}
+              {{#assets/b-crud-table-filter fields=columns item=item actSearchChange="actSearchChange"}}
+                {{bs-button type="success" class="fa fa-plus right-space" size="xs" action=(action "actSearchAdd" "filter" item)}}
+                {{#if (not-eq indexFilter 0)}}
+                  {{bs-button type="danger" class="fa fa-close" size="xs" action=(action "actSearchRemove" "filter" item)}}
+                {{/if}}
+              {{/assets/b-crud-table-filter}}
+            {{/each}}
+
+            <li class="divider"></li>
+            <li class="dropdown-header">{{t "sort.title"}}</li>
+
+            {{#each sort.items as |item indexSort|}}
+              {{#assets/b-crud-table-sort fields=columns item=item actSearchChange="actSearchChange"}}
+                {{bs-button type="success" class="fa fa-plus right-space" size="xs" action=(action "actSearchAdd" "sort" item)}}
+                {{#if (not-eq indexSort 0)}}
+                  {{bs-button type="danger" class="fa fa-close" size="xs" action=(action "actSearchRemove" "sort" item)}}
+                {{/if}}
+              {{/assets/b-crud-table-sort}}
+            {{/each}}
+
+            <li class="divider"></li>
+            <li class="search-item">
+              {{bs-button type="primary" defaultText=(t "button.go") action="actSearchGo"}}
+              {{bs-button type="link" defaultText=(t "button.reset") action="actSearchReset"}}
+            </li>
+          {{/bs-dropdown-menu}}
+        {{/bs-dropdown}}
+      {{/bs-form}}
+    </div>
+  </div>
+</div>
+
+{{#if model}}
+<div class="row">
+  <div class="col-xs-12">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th width="1">{{input type="checkbox" checked=isSelectAll change=(action "toggleCheckedAll")}}</th>
+
+            {{#each columns as |column|}}
+            <th width={{column.width}}>{{column.name}}</th>
+            {{/each}}
+          </tr>
+        </thead>
+
+        {{#multiselect-checkboxes tagName="tbody" labelProperty="key" onchange=(action "toggleChecked") options=model selection=selectedModels as |model isSelected|}}
+        <tr>
+          <td>{{input type="checkbox" checked=isSelected}}</td>
+
+          {{#each columns as |column|}}
+            <td>
+            {{#if column.editAble.status}}
+              <a href="#" {{action "actEditSelected" model}}>
+                {{h-lookup-properties model column.key}}
+              </a>
+            {{else}}
+              {{h-lookup-properties model column.key}}
+            {{/if}}
+            </td>
+          {{/each}}
+        </tr>
+        {{/multiselect-checkboxes}}
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    {{simple-pagination recordCount=model.meta.pagination.total pageSize=model.meta.pagination.per_page
+      pageNumber=model.meta.pagination.current_page onPageSelect=(action "actPaginationClicked")}}
+  </div>
+</div>
+
+{{else}}
+<p class="lead text-center">
+  {{t "message.error.noData"}}
+</p>
+{{/if}}

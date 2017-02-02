@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-12">
+    {{bs-form-element controlType="select"
+        choices=fields value=key
+        choiceLabelProperty="name" choiceValueProperty="key"
+        change=(action "actFieldChange" item)}}
+
+    {{bs-form-element controlType="select"
+        choices=operators value=operator
+        choiceLabelProperty="name" choiceValueProperty="key"
+        change=(action "actOperatorChange" item)}}
+
+    {{bs-form-element value=keyword placeholder=(t "filter.keyword") change=(action "actKeywordChange" item)}}
+
+    {{yield}}
+  </div>
+</div>

@@ -1,0 +1,16 @@
+{{#assets/b-crud-form model=modelForm submit="submit"}}
+  {{bs-form-element label=(t "biscuit.user.user_id.name") disabled=true property="user.user_id"}}
+
+  {{bs-form-element label=(t "field.name.name") property="user.name"}}
+
+  {{#bs-form-element label=(t "field.locale.name")}}
+    {{#power-select
+      options=modelForm.locales
+      selected=(find-by "id" modelForm.user.locale modelForm.locales)
+      searchEnabled=false
+      onchange=(action "actChooseLocales" value="id") as |option|
+    }}
+      {{option.name}}
+    {{/power-select}}
+  {{/bs-form-element}}
+{{/assets/b-crud-form}}

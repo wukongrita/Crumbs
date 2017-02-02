@@ -1,0 +1,62 @@
+<div class="row toolbar">
+  <div class="col-xs-12">
+    {{#bs-button type="info" action=(action "actToolbarList")}}<span class="fa fa-list"></span>{{/bs-button}}
+    {{#bs-button type="warning"  action=(action "actToolbarNew")}}<span class="fa fa-plus"></span> {{t "button.new"}}{{/bs-button}}
+  </div>
+</div>
+
+{{#if (eq mode "list")}}
+  {{assets/b-crud-table model=modelList columns=crudTable.columns
+    actRefresh="actRefresh" actEditSelected="actEditSelected"}}
+
+{{else}}
+  {{#assets/b-crud-form model=modelForm submit="submit"}}
+    {{bs-form-element label=(t "biscuit.user.user_id.name") disabled=isEditing property="user.user_id" autofocus="autofocus"}}
+
+    {{bs-form-element label=(t "field.name.name") property="user.name"}}
+
+    {{#bs-form-element label=(t "field.locale.name")}}
+      {{#power-select
+        options=modelForm.locales
+        selected=(find-by "id" modelForm.user.locale modelForm.locales)
+        searchEnabled=false
+        onchange=(action "actChooseLocales" value="id") as |option|
+      }}
+        {{option.name}}
+      {{/power-select}}
+    {{/bs-form-element}}
+
+
+{{!--
+    {{#bs-form-element label=(t "biscuit.detail.activation.name")}}
+      {{#power-select
+        options=modelForm.locales
+        selected=(find-by "id" powerSelect.locale modelForm.locales)
+        searchEnabled=false
+        onchange=(action "actChooseLocales" value="id") as |option|
+      }}
+        {{option.name}}
+      {{/power-select}}
+    {{/bs-form-element}}
+ --}}
+{{!--
+    {{bs-form-element label=(t "field.name.name") property="user.name"}}
+
+    {{#bs-form-element label=(t "field.locale.name")}}
+      {{#power-select
+        options=modelForm.locales
+        selected=(find-by "id" powerSelect.locale modelForm.locales)
+        searchEnabled=false
+        onchange=(action "actChooseLocales" value="id") as |option|
+      }}
+        {{option.name}}
+      {{/power-select}}
+    {{/bs-form-element}}
+
+    {{bs-form-element label=(t "field.id.name") property="id" value=model.id disabled=isEditing autofocus="autofocus"}}
+
+    {{bs-form-element controlType="textarea" label=(t "field.description.name") property="description" value=model.description rows="3"}}
+ --}}
+  {{/assets/b-crud-form}}
+
+{{/if}}

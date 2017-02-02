@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-xs-12">
+{{!--
+    {{#bs-form-element}}
+      {{#power-select
+        options=fields
+        selected=(find-by "id" key fields)
+        searchEnabled=false
+        onchange=(action "actFieldChange" value="key") as |option|
+      }}
+        {{option.name}}
+      {{/power-select}}
+    {{/bs-form-element}}
+ --}}
+
+    {{bs-form-element controlType="select"
+        choices=fields value=key
+        choiceLabelProperty="name" choiceValueProperty="key"
+        change=(action "actFieldChange" item)}}
+
+    {{bs-form-element controlType="select"
+        choices=types value=type
+        choiceLabelProperty="name" choiceValueProperty="key"
+        change=(action "actTypeChange" item)}}
+
+    {{yield}}
+  </div>
+</div>

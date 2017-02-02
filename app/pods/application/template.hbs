@@ -1,0 +1,302 @@
+{{#if session.isAuthenticated}}
+  <!-- header logo: style can be found in header.less -->
+  <header class="header">
+    {{#link-to "m.dashboard" title="Dashboard" class="logo"}}Crumbs{{/link-to}}
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-fixed-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" {{action "sidebarToggle"}}>
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      {{!-- <div class="navbar-right"> --}}
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+        {{!--
+          {{#bs-dropdown tagName="li" classNames="user user-menu"}}
+            {{#bs-dropdown-toggle}}
+              <i class="fa fa-envelope"></i>
+              <span class="label label-success">9</span>
+            {{/bs-dropdown-toggle}}
+            {{#bs-dropdown-menu classNames="dropdown-custom dropdown-menu-right"}}
+              <li class="dropdown-header">You have 9 tasks</li>
+              <li><a href="#" {{action "logout"}}><i class="fa fa-sign-out fa-fw"></i> {{t "navbar.logout"}}</a></li>
+              <li class="footer"><a href="#" {{action "logout"}}>View All</a></li>
+            {{/bs-dropdown-menu}}
+          {{/bs-dropdown}}
+          --}}
+          {{#bs-dropdown tagName="li" classNames="user user-menu"}}
+            {{#bs-dropdown-toggle}}
+              <i class="fa fa-user fa-fw"></i> <span><i class="fa fa-caret-down"></i></span>
+            {{/bs-dropdown-toggle}}
+            {{#bs-dropdown-menu classNames="dropdown-custom dropdown-menu-right"}}
+              <li class="dropdown-header">Account</li>
+              <li>
+                {{#link-to "m.biscuit.profiles"}}<i class="fa fa-user fa-fw"></i> {{t "navbar.user.profile"}}{{/link-to}}
+                {{#link-to "m.dashboard"}}<i class="fa fa-gear fa-fw"></i> {{t "navbar.settings"}}{{/link-to}}
+              </li>
+              <li class="divider"></li>
+              <li><a href="#" {{action "logout"}}><i class="fa fa-sign-out fa-fw"></i> {{t "navbar.logout"}}</a></li>
+            {{/bs-dropdown-menu}}
+          {{/bs-dropdown}}
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <div class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas {{if isSidebarCollapsed "collapse-left"}}">
+      <!-- sidebar: style can be found in sidebar.less -->
+      {{assets/b-sidebar elementId="side-menu"}}
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side {{if isSidebarCollapsed "strech"}}">
+      <!-- Content Header (Page header) -->
+
+
+      <!-- Main content -->
+      <section class="content">
+        {{outlet}}
+      </section>
+    </aside>
+  </div>
+
+{{else}}
+  {{outlet}}
+{{/if}}
+
+{{ember-notify messageStyle="bootstrap"}}
+
+{{!--
+
+
+  <div class="brand clearfix">
+    {{#link-to "m.dashboard" title="Dashboard" class="logo"}}Crumbs{{/link-to}}
+    <span class="menu-btn"><i class="fa fa-bars"></i></span>
+
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+          {{#bs-dropdown tagName="li" classNames="dropdown user user-menu"}}
+            {{#bs-dropdown-toggle}}
+              <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+            {{/bs-dropdown-toggle}}
+            {{#bs-dropdown-menu classNames="dropdown-custom dropdown-menu-right"}}
+              <li class="dropdown-header text-center">Account</li>
+              <li>
+                <a href="#"><i class="fa fa-user fa-fw"></i> {{t "navbar.user.profile"}}</a>
+                {{#link-to "m.dashboard"}}<i class="fa fa-gear fa-fw"></i> {{t "navbar.settings"}}{{/link-to}}
+              </li>
+              <li class="divider"></li>
+              <li><a href="#" {{action "logout"}}><i class="fa fa-sign-out fa-fw"></i> {{t "navbar.logout"}}</a></li>
+            {{/bs-dropdown-menu}}
+          {{/bs-dropdown}}
+        </ul>
+      </div>
+    <ul class="ts-profile-nav">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Settings</a></li>
+      <li class="ts-account">
+        <a href="#"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
+        <ul>
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">Edit Account</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="ts-main-content">
+    <nav class="ts-sidebar">
+      {{assets/b-sidebar elementId="side-menu"}}
+      <ul class="ts-sidebar-menu">
+        <li class="ts-label">Search</li>
+        <li>
+          <input type="text" class="ts-sidebar-search" placeholder="Search here...">
+        </li>
+        <li class="ts-label">Main</li>
+        <li><a href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="#"><i class="fa fa-desktop"></i> UI Elements</a>
+          <ul>
+            <li><a href="panels.html">Panels and Wells</a></li>
+            <li><a href="buttons.html">Buttons</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="typography.html">Typography</a></li>
+            <li><a href="icon.html">Icon</a></li>
+            <li><a href="grid.html">Grid</a></li>
+          </ul>
+        </li>
+        <li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
+        <li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>
+        <li><a href="charts.html"><i class="fa fa-pie-chart"></i> Charts</a></li>
+        <li><a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown</a>
+          <ul>
+            <li><a href="#">2nd level</a></li>
+            <li><a href="#">2nd level</a></li>
+            <li><a href="#">3rd level</a>
+              <ul>
+                <li><a href="#">3rd level</a></li>
+                <li><a href="#">3rd level</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="open"><a href="#"><i class="fa fa-files-o"></i> Sample Pages</a>
+          <ul>
+            <li class="open"><a href="blank.html">Blank page</a></li>
+            <li><a href="login.html">Login page</a></li>
+          </ul>
+        </li>
+
+        <!-- Account from above -->
+        <ul class="ts-profile-nav">
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Settings</a></li>
+          <li class="ts-account">
+            <a href="#"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
+            <ul>
+              <li><a href="#">My Account</a></li>
+              <li><a href="#">Edit Account</a></li>
+              <li><a href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+
+    <div class="content-wrapper">
+      <div class="container-fluid">
+
+        {{outlet}}
+
+        <div class="row">
+          <div class="clearfix pt pb">
+            <div class="col-md-12">
+              &copy; Crumbs, 2008 - 2016
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- header logo: style can be found in header.less -->
+  <header class="header">
+    {{#link-to "m.dashboard" title="Dashboard" class="logo"}}
+      Crumbs
+    {{/link-to}}
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" {{action "sidebarToggle"}}>
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+          {{#bs-dropdown tagName="li" classNames="dropdown user user-menu"}}
+            {{#bs-dropdown-toggle}}
+              <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+            {{/bs-dropdown-toggle}}
+            {{#bs-dropdown-menu classNames="dropdown-custom dropdown-menu-right"}}
+              <li class="dropdown-header text-center">Account</li>
+              <li>
+                <a href="#"><i class="fa fa-user fa-fw"></i> {{t "navbar.user.profile"}}</a>
+                {{#link-to "m.dashboard"}}<i class="fa fa-gear fa-fw"></i> {{t "navbar.settings"}}{{/link-to}}
+              </li>
+              <li class="divider"></li>
+              <li><a href="#" {{action "logout"}}><i class="fa fa-sign-out fa-fw"></i> {{t "navbar.logout"}}</a></li>
+            {{/bs-dropdown-menu}}
+          {{/bs-dropdown}}
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <div class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas">
+      <!-- sidebar: style can be found in sidebar.less -->
+      {{assets/b-sidebar elementId="side-menu"}}
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+      <!-- Content Header (Page header) -->
+
+
+      <!-- Main content -->
+      <section class="content">
+        {{outlet}}
+      </section>
+    </aside>
+  </div>
+
+
+
+
+  <div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <div class="navbar-header">
+        {{#bs-button class="navbar-toggle" toggle=true action="sidebarToggle"}}
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        {{/bs-button}}
+
+        {{#link-to "m.dashboard" title="Dashboard" class="navbar-brand"}}
+          Crumbs
+        {{/link-to}}
+      </div>
+      <!-- /.navbar-header -->
+
+      <ul class="nav navbar-top-links navbar-right">
+        {{#bs-dropdown tagName="li"}}
+          {{#bs-dropdown-toggle}}
+            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+          {{/bs-dropdown-toggle}}
+          {{#bs-dropdown-menu}}
+            <li><a href="#"><i class="fa fa-user fa-fw"></i> {{t "navbar.user.profile"}}</a></li>
+            <li>{{#link-to "m.dashboard"}}<i class="fa fa-gear fa-fw"></i> {{t "navbar.settings"}}{{/link-to}}</li>
+            <li class="divider"></li>
+            <li><a href="#" {{action "logout"}}><i class="fa fa-sign-out fa-fw"></i> {{t "navbar.logout"}}</a></li>
+          {{/bs-dropdown-menu}}
+        {{/bs-dropdown}}
+      </ul>
+      <!-- /.navbar-top-links -->
+
+      <div class="navbar-default sidebar" role="navigation">
+        <!-- sidebar -->
+        {{#bs-collapse collapsed=sidebarCollapsed class="sidebar-nav navbar-collapse"}}
+          {{assets/b-sidebar elementId="side-menu"}}
+        {{/bs-collapse}}
+      </div>
+      <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+      {{outlet}}
+    </div>
+    <!-- /#page-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+ --}}

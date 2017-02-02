@@ -1,0 +1,8 @@
+{{#bs-form formLayout="horizontal" action=(action "submit" model) model=model novalidate=true}}
+
+  {{yield}}
+
+  {{#bs-form-element horizontalLabelGridClass=buttonOffset}}
+    {{bs-button buttonType="submit" type="primary" defaultText=(t "button.save") loadingText=(t "loading.wait")}}
+  {{/bs-form-element}}
+{{/bs-form}}

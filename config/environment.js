@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'crumbs',
+    podModulePrefix: 'crumbs/pods',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
@@ -16,6 +17,16 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    'ember-simple-auth': {
+      authenticationRoute: '/',
+      routeAfterAuthentication: '/m/dashboard',
+      routeIfAlreadyAuthenticated: '/m/dashboard'
+    },
+
+    i18n: {
+      defaultLocale: 'en'
     }
   };
 

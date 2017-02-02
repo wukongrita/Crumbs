@@ -1,0 +1,26 @@
+{{#if node.children}}
+  <a href="#" title="{{node.name}}">
+    {{node.name}}
+    <span class="fa arrow"></span>
+  </a>
+
+  {{#each node.children as |node|}}
+    {{assets/b-sidebar-menu nodes=node level=level}}
+  {{/each}}
+
+{{else}}
+
+  {{h-variable "detail_route" (h-is-route-details node.uri) true}}
+
+  {{#if (eq (h-variable "detail_route") false)}}
+    {{#link-to node.uri title=node.title click=(action "actSelectedMenu" node.id)}}
+      {{node.name}}
+    {{/link-to}}
+  {{else}}
+    {{h-variable "detail_route_id" (h-is-route-details node.uri "id") true}}
+
+    {{#link-to (h-variable "detail_route") (query-params master_id=(h-variable "detail_route_id")) title=node.title click=(action "actSelectedMenu" node.id)}}
+      {{node.name}}
+    {{/link-to}}
+  {{/if}}
+{{/if}}
